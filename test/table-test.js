@@ -2,7 +2,7 @@
 
 const helper = require('./test-helper');
 const _ = require('lodash');
-const Joi = require('joi');
+const Joi = require('@hapi/joi');
 const Table = require('../lib/table');
 const Schema = require('../lib/schema');
 const Query = require('../lib//query');
@@ -545,29 +545,6 @@ describe('table', () => {
       table.create({ email: 'test@test.com', name: [1, 2, 3] }, (err, account) => {
         expect(err).to.exist;
         expect(err).to.match(/ValidationError/);
-        expect(account).to.not.exist;
-
-        sinon.assert.notCalled(docClient.put);
-        done();
-      });
-    });
-
-    it('should fail with custom errors specified in schema', (done) => {
-      const config = {
-        hashKey: 'email',
-        schema: {
-          email: Joi.string().email({ errorLevel: true }).required(),
-          custom: Joi.any().forbidden().error(new Error('Only hashed passwords should be persisted')),
-        }
-      };
-
-      const s = new Schema(config);
-
-      const table = new Table('accounts', s, realSerializer, docClient, logger);
-
-      table.create({ email: 'test@test.com', custom: 'forbidden text' }, (err, account) => {
-        expect(err).to.exist;
-        expect(err).to.match(/hashed passwords/);
         expect(account).to.not.exist;
 
         sinon.assert.notCalled(docClient.put);
