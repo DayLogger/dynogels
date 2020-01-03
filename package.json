@@ -27,9 +27,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@hapi/joi": "^15.1.0",
     "async": "2.5.0",
-    "aws-sdk": "^2.585.0",
     "lodash": "^4.17.15",
     "uuid": "3.1.0"
   },
@@ -45,6 +43,7 @@
     "sinon": "4.0.1"
   },
   "peerDependencies": {
-    "@hapi/joi": "^15.1.0"
+    "@hapi/joi": "^15.1.0",
+    "aws-sdk": "^2.585.0"
   }
 }
